@@ -17,20 +17,30 @@ models:
         are generated from the FHV Trip Record submissions made by bases.
       columns:
       - name: Dispatching_base_num
-      description: The TLC Base License Number of the base that dispatched the trip
+        description: The TLC Base License Number of the base that dispatched the trip
       - name: Pickup_datetime
-      description: The date and time of the trip pick-up
+        description: The date and time of the trip pick-up
       - name: Dropoff_datetime
-      description: The date and time of the trip dropoff
-      - name: PULocationID
-      description: TLC Taxi Zone in which the trip began
-      - name: DOLocationID
-      description: TLC Taxi Zone in which the trip ended
-      -name: SR_Flag
-      description: Indicates if the trip was a part of a shared ride chain offered by a
-          High Volume FHV company (e.g. Uber Pool, Lyft Line). For shared
+        description: The date and time of the trip dropoff
+      - name: Pickup_locationid
+        description: TLC Taxi Zone in which the trip began
+        tests:
+          - relationships:
+              to: ref('taxi_zone_lookup')
+              field: locationid
+              severity: warn
+      - name: Dropoff_locationid
+        description: TLC Taxi Zone in which the trip ended
+        tests:
+          - relationships:
+              to: ref('taxi_zone_lookup')
+              field: locationid
+              severity: warn
+      - name: SR_Flag
+        description: >
+          Indicates if the trip was a part of a shared ride chain offered by a High Volume 
+          FHV company (e.g. Uber Pool, Lyft Line). For shared
           trips, the value is 1. For non-shared rides, this field is null. 
-          
           NOTE 
           For most High Volume FHV companies, only shared rides that
           were requested AND matched to another shared-ride request over
@@ -77,7 +87,7 @@ models:
                   to: ref('taxi_zone_lookup')
                   field: locationid
                   severity: warn
-          - name: dropoff_locationid 
+          - name: Dropoff_locationid 
             description: locationid where the meter was engaged.
             tests:
               - relationships:
