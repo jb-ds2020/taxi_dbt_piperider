@@ -1,3 +1,3 @@
 # taxi-dbt
 
-This is the first dbt project for the taxi data.
+This is the extension of the taxi dbt project for using piperider with dbt core.
